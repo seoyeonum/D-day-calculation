@@ -1,3 +1,4 @@
+
 // ■ BufferedReader 사용하여 입력값에 따른 수업 진행률 구하기
 
 import java.io.BufferedReader;
@@ -7,7 +8,6 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 
 public class CurriculumProgress
 {
@@ -20,11 +20,10 @@ public class CurriculumProgress
 	// 변수 선언 및 초기화
 	String dateFormatType = "yyyyMMdd";
 	String strDate = "20240923";
-	String todayDate;
+	String todayDate= "20241010";
 	String endDate = "20250422";
-
 	
-	// 연산 및 처리
+	// 연산 및 처리	
 	System.out.print("오늘 날짜를 입력하세요(yyyyMMdd): ");
 	todayDate = br.readLine();				//-- 아직 문자열
 
@@ -33,6 +32,7 @@ public class CurriculumProgress
 
 	// 시작일과 종료일 문자열을 Date 객체로 변환합니다.
 	Date from = simpleDateFormat.parse(strDate);
+	Date today = simpleDateFormat.parse(todayDate);
 	Date to = simpleDateFormat.parse(endDate);
 	
 	// 테스트 (확인)
@@ -40,10 +40,10 @@ public class CurriculumProgress
 	//System.out.println("from: " + from);
 	
 	
-	// 시작일과 종료일의 차이를 밀리초 단위로 계산합니다.
+	// 시작일과 종료일의 차이를 밀리초 단위로 계산
 	long diffDateSec = to.getTime() - from.getTime();		//-- 날짜 간 차이(하루, 이틀...) = 마지막날 - 시작날
 
-	// 밀리초 단위의 차이를 일수로 변환합니다.
+	// 밀리초 단위의 차이를 일수로 변환
 	long diffDateDay = diffDateSec / 86400000L;	
 	
 	// 테스트 (확인) - 수업 시작일 ~ 수업 종료일
@@ -58,6 +58,40 @@ public class CurriculumProgress
 	// 테스트 (확인) - 수업 시작일 ~ 수업 종료일 사이 주말
 	System.out.println("시작일과 종료일 사이 주말은 " + weekend + "번 입니다.");
 	
+	// 크리스마스 디데이 계산----------------------------------------------------------------------
+	
+	String xmasDate = "20241225";
+	Date xmas = simpleDateFormat.parse(xmasDate);
+	
+	// 오늘과 종료일의 차이를 밀리초 단위로 계산
+	long diffXToTodaySec = xmas.getTime() - today.getTime();		//-- 날짜 간 차이(하루, 이틀...) = 마지막날 - 시작날
 
+	// 밀리초 단위의 차이를 일수로 변환합니다.
+	long diffXToTodayDay = diffXToTodaySec / 86400000L;	
+	
+	// 오늘 ~ 크리스마스 디데이 출력
+	System.out.println();
+	System.out.println("    [ 크리스마스 디데이 ]    ");
+	System.out.println("오늘은 " + todayDate + "입니다.");
+	System.out.println("크리스마스는 " + xmasDate + "입니다.");
+	System.out.println("오늘은 크리스마스 D-" + diffXToTodayDay + " 입니다.");		//-- 전체 기간에서 주말이랑 쉬는날이랑 공휴일 빼줘야 함@!@@@@@@@@@@
+	
 	}
 }
+
+// 실행 결과
+/*
+
+오늘 날짜를 입력하세요(yyyyMMdd): 20241029
+우리 수업 시작일은 20240923입니다.
+우리 수업 종료일은 20250422입니다.
+시작일과 종료일 간 차이는 211일 입니다.
+시작일과 종료일 사이 주말은 30번 입니다.
+
+    [ 크리스마스 디데이 ]    
+오늘은 20241029입니다.
+크리스마스는 20241225입니다.
+오늘은 크리스마스 D-57 입니다.
+
+
+*/
