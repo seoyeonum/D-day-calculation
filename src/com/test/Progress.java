@@ -6,32 +6,47 @@ public class Progress
 {
 	public static void main(String[] args) throws ParseException	//** 없으면 에러!
 	{
-		Sist ob = new Sist();
+		Sist ob = new Sist(); 
 		ob.setToday();
-		//int hd = ob.holiday();
 		
-		int p1 = ob.betwDates(ob.getStartClass(), ob.getLastClass());
-		System.out.println("전체 수업일수 : " + (p1 -13 +1) + "일");
-		//** 개천절연휴(3일) + 한글날(1일) + 임시(1일) + 크리스마스(1일) + 신정연휴(2일) + 설연휴(4일) + 삼일절(1일)
-		//    = 전체 13일은 수기로 빼줌
-		//** +1 해야 날짜가 맞아진다.(위에서는 날짜간 차이를 구한 것이기 때문)
+		System.out.println("-----------------------------");
 		
-		int p2 = ob.betwDates(ob.getStartClass(), ob.getToday());
-		System.out.println("누적 수업일수 : " + (p2 -4 +1) + "일");
-		//** 개천절연휴(3일) + 한글날(1일) = 4일은 수기로 빼줌
-		//** +1 해야 날짜가 맞아진다.(위에서는 날짜간 차이를 구한 것이기 때문)
+		final int hdBtwClass = 13;					//-- 수업 과정 중 전체 휴일 수는 13일로 고정.
+		int hdBtwTodayAndLast = ob.leftHoliday();	//-- 앞으로 남은 휴일 수
 		
-		ob.calProgress((p2 -4 +1), (p1 -13 +1));
+		int period1 = ob.betwDates1(ob.getStartClass(), ob.getLastClass());
+		int y = period1 -hdBtwClass +1;				//-- +1 해야 날짜가 맞아진다.(위에서는 날짜간 차이를 구한 것이기 때문)
+		System.out.println("전체 수업일수 : " + y + "일");
+		
+		//System.out.println(hdBtwTodayAndLast);
+		
+		int period2 = ob.betwDates1(ob.getStartClass(), ob.getToday());
+		int x = (period2 -(hdBtwClass -hdBtwTodayAndLast) +1);	//-- +1 해야 날짜가 맞아진다.
+		System.out.println("누적 수업일수 : " + x + "일");
+		
+		ob.calProgress(x,y);
+		
+		//System.out.println(LocalDate.now());
+		
+		System.out.println("-----------------------------");
+		
+		// 다음 휴일까지 남은 일자 알려주기
+		ob.latelyHoliday();
+		System.out.println();	// 개행
 	}
 }
 
 // 실행 결과
 /*
 
-오늘은 2024년 11월 5일 입니다.
+오늘은 2025년 1월 15일 입니다.
+-----------------------------
 전체 수업일수 : 140일
-누적 수업일수 : 28일
-수업 진행률 : 20.00000%
-계속하려면 아무 키나 누르십시오 . . .
+누적 수업일수 : 75일
+수업 진행률 : 53.57143%
+-----------------------------
+다음 휴일은 2025년 01월 27일입니다.
+해당 휴일까지 D-12 입니다.
+
 
 */
